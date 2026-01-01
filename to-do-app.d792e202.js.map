@@ -1,0 +1,1 @@
+{"mappings":"ACAA,QAAQ,GAAG,CAAC","sources":["<anon>","src/index.js"],"sourcesContent":["var $35da740d59af89ba$exports = {};\nconsole.log(\"Parcel \\u043F\\u0440\\u0430\\u0446\\u044E\\u0454 \\uD83D\\uDD25\");\n\n\n//# sourceMappingURL=to-do-app.d792e202.js.map\n","console.log('Parcel працює 🔥');"],"names":["console","log"],"version":3,"file":"to-do-app.d792e202.js.map"}
