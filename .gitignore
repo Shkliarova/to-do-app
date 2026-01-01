@@ -1,0 +1,12 @@
+# dependencies
+node_modules/
+
+# parcel
+.parcel-cache
+dist/
+
+# env
+.env
+
+# system
+.DS_Store

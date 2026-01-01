@@ -1,0 +1,23 @@
+{
+  "name": "to-do-app",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shkliarova/to-do-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Shkliarova/to-do-app/issues"
+  },
+  "homepage": "https://github.com/Shkliarova/to-do-app#readme",
+  "devDependencies": {
+    "parcel": "^2.16.3"
+  }
+}
