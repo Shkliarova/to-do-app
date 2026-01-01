@@ -75,3 +75,230 @@ table {
 #__next {
   isolation: isolate;
 }
+
+/* --- Основні стилі --- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.todo-app {
+  background: #ffffff;
+  width: 100%;
+  max-width: 450px;
+  margin-top: 50px;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.todo-app h1 {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* --- Форма додавання завдання --- */
+.todo-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.todo-input:focus {
+  border-color: #0c8792;
+}
+
+.todo-form button {
+  padding: 10px 20px;
+  background: #0c8792;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.todo-form button:hover {
+  background: #054146;
+}
+
+/* --- Список завдань --- */
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9fafb;
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.todo-list li:hover {
+  background: #e6f0f0;
+}
+
+.todo-list li.completed .task-text {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-text {
+  font-size: 16px;
+}
+
+.custom-checkbox{
+  display: flex;
+}
+
+.custom-checkbox input {
+  display: none;
+}
+
+.custom-checkbox .checkmark {
+  width: 20px;
+  height: 20px;
+  background-color: #f5f7fa;
+  border: 2px solid #d1d5db;
+  border-radius: 6px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.custom-checkbox:hover .checkmark {
+  border-color: #0c8792;
+}
+
+.custom-checkbox input:checked + .checkmark {
+  background-color: #0c8792;
+  border-color: #0c8792;
+}
+
+.custom-checkbox .checkmark::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.custom-checkbox input:checked + .checkmark::after {
+  opacity: 1;
+}
+
+/* --- Кнопки дій --- */
+.task-actions{
+  display: flex;
+  gap: 8px;
+}
+
+.task-actions button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.task-actions button svg {
+  display: block; 
+  width: 20px; 
+  height: 20px;
+}
+
+.task-actions button.edit {
+  color: #0c8792;
+}
+
+.task-actions button.edit:hover {
+  color: #054146;
+}
+
+.task-actions button.delete {
+  color: #ef4444;
+}
+
+.task-actions button.delete:hover {
+  color: #b91c1c;
+}
+
+/* --- Фільтри --- */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.filters button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.filters button:hover,
+.filters button.active {
+  background: #0c8792;
+  color: white;
+  border-color: #0c8792;
+}
+
+/* --- Адаптивність --- */
+@media (max-width: 500px) {
+  .todo-app {
+    margin: 30px 15px;
+    padding: 20px;
+  }
+
+  .todo-form button {
+    padding: 10px;
+  }
+
+  .task-text {
+    font-size: 14px;
+  }
+}

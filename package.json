@@ -21,5 +21,8 @@
   "devDependencies": {
     "gh-pages": "^6.3.0",
     "parcel": "^2.16.3"
+  },
+  "dependencies": {
+    "notiflix": "^3.2.8"
   }
 }
