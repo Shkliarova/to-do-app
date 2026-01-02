@@ -4,22 +4,20 @@ const selectors = {
     form: document.querySelector('.todo-form'),
     list: document.querySelector('.todo-list'),
     input: document.querySelector('.todo-input'),
-    filters: {
-        all: document.querySelector('.filters [data-filter = "all"]'),
-        active: document.querySelector('.filters [data-filter = "active"]'),
-        completed: document.querySelector('.filters [data-filter = "completed"]')
-    }
+    filter: document.querySelector('.filters')
 }
+const buttons = document.querySelectorAll('.filters button');
 
 const LS_KEY = "7Y$}7n)D}75ONC>";
 
 const LSdata = JSON.parse(localStorage.getItem(LS_KEY)) || [];
 
 if(LSdata.length !== 0){
-    selectors.list.insertAdjacentHTML('beforeend', createMarkup(LSdata));
+    selectors.list.innerHTML = createMarkup(LSdata);
 } 
 
-selectors.form.addEventListener('submit', addTask)
+selectors.form.addEventListener('submit', addTask);
+selectors.filter.addEventListener('click', onActiveClick);
 
 function addTask(e) {
     e.preventDefault();
@@ -44,12 +42,12 @@ function addTask(e) {
 }
 
 function createMarkup(tasks) {
-    return tasks.map(({ text }) => {
+    return tasks.map(({ text, id, completed }) => {
         return `
-        <li class="task-item">
+        <li class="task-item ${completed ? 'completed' : ''}" data-id="${id}">
             <div class="task-left">
                 <label class="custom-checkbox">
-                    <input type="checkbox" />
+                    <input ${completed ? 'checked' : ''} name="checkbox" type="checkbox" />
                     <span class="checkmark"></span>
                 </label>
                 <span class="task-text">${text}</span>
@@ -73,4 +71,61 @@ function createMarkup(tasks) {
         </li>
         `;
     }).join('');
+}
+
+function renderTasks(currentFilter){
+    let filteredData;
+
+    switch (currentFilter) {
+        case "completed":
+            filteredData = [...LSdata].filter(item => item.completed)
+            break;
+        case "active":
+            filteredData = [...LSdata].filter(item => !item.completed)
+            break;
+        default:
+            filteredData = [...LSdata];
+    }
+
+    selectors.list.innerHTML = createMarkup(filteredData);
+}
+
+function onActiveClick(e){
+    buttons.forEach(button => button.classList.remove('active'));
+
+    if(e.target === e.currentTarget){
+        return;
+    }
+
+    e.target.classList.add('active');
+
+    renderTasks(e.target.dataset.filter);
+}
+
+selectors.list.addEventListener('change', handleCompletedTask)
+
+function handleCompletedTask(e){
+    if(e.target.type !== "checkbox"){
+        return;
+    }
+
+    const currentTask = e.target.closest('li');
+    const id = Number(currentTask.dataset.id);
+    
+    const currentItem = [...LSdata].find(task => task.id === id);
+    if (!currentItem) return;
+
+    currentItem.completed = e.target.checked;
+
+    if(currentItem.completed){
+        currentTask.classList.add('completed');
+    } else{
+        currentTask.classList.remove('completed');
+    }
+
+    localStorage.setItem(LS_KEY, JSON.stringify(LSdata));
+
+    const activeFilter = document.querySelector('.filters button.active')?.dataset.filter || 'all';
+
+    renderTasks(activeFilter);
 }
