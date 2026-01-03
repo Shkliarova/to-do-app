@@ -181,6 +181,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
 .task-text {
@@ -310,9 +311,5 @@ body {
 
   .todo-form button {
     padding: 10px;
-  }
-
-  .task-text {
-    font-size: 14px;
   }
 }
