@@ -22,7 +22,11 @@ selectors.filter.addEventListener('click', onActiveClick);
 function addTask(e) {
     e.preventDefault();
 
-    const inputValue = e.target.elements[0].value;
+    const inputValue = e.target.elements[0].value.trim();
+    if(!inputValue){
+        Notiflix.Notify.failure('Будь ласка, введіть завдання');
+        return;
+    } 
 
     const task = {
         id: Date.now(),
@@ -102,7 +106,8 @@ function onActiveClick(e){
     renderTasks(e.target.dataset.filter);
 }
 
-selectors.list.addEventListener('change', handleCompletedTask)
+selectors.list.addEventListener('change', handleCompletedTask);
+selectors.list.addEventListener('click', handleEditBtn);
 
 function handleCompletedTask(e){
     if(e.target.type !== "checkbox"){
@@ -112,7 +117,7 @@ function handleCompletedTask(e){
     const currentTask = e.target.closest('li');
     const id = Number(currentTask.dataset.id);
     
-    const currentItem = [...LSdata].find(task => task.id === id);
+    const currentItem = LSdata.find(task => task.id === id);
     if (!currentItem) return;
 
     currentItem.completed = e.target.checked;
@@ -128,4 +133,36 @@ function handleCompletedTask(e){
     const activeFilter = document.querySelector('.filters button.active')?.dataset.filter || 'all';
 
     renderTasks(activeFilter);
+}
+
+function handleEditBtn(e){
+    const editBtn = e.target.closest('.edit');
+
+    if(!editBtn){
+        return;
+    }
+
+    const currentTask = editBtn.closest('li');
+    const id = Number(currentTask.dataset.id);
+    
+    const currentItem = LSdata.find(task => task.id === id);
+    if (!currentItem) return;
+
+    if (currentItem.completed) {
+        Notiflix.Notify.warning('Неможливо редагувати виконане завдання');
+        return;
+    }
+
+    const newText = prompt("Відредагуйте завдання", currentItem.text);
+    if (!newText || !newText.trim()) return;
+
+    currentItem.text = newText.trim();
+
+    localStorage.setItem(LS_KEY, JSON.stringify(LSdata));
+
+    const activeFilter = document.querySelector('.filters button.active')?.dataset.filter || 'all';
+
+    renderTasks(activeFilter);
+
+    Notiflix.Notify.info('Текст завдання змінено');
 }

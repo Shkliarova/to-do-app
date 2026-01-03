@@ -18,6 +18,7 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  padding: 20px;
 }
 
 img,
@@ -79,7 +80,6 @@ table {
 /* --- Основні стилі --- */
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Inter', sans-serif;
   background: #f5f7fa;
   display: flex;
@@ -92,7 +92,7 @@ body {
   background: #ffffff;
   width: 100%;
   max-width: 600px;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   padding: 30px 25px;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
