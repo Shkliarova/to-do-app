@@ -239,6 +239,8 @@ body {
 .task-actions{
   display: flex;
   gap: 8px;
+  width: fit-content;
+  flex-shrink: 0;
 }
 
 .task-actions button {
