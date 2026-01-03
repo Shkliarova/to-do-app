@@ -10,7 +10,7 @@ const buttons = document.querySelectorAll('.filters button');
 
 const LS_KEY = "7Y$}7n)D}75ONC>";
 
-const LSdata = JSON.parse(localStorage.getItem(LS_KEY)) || [];
+let LSdata = JSON.parse(localStorage.getItem(LS_KEY)) || [];
 
 if(LSdata.length !== 0){
     selectors.list.innerHTML = createMarkup(LSdata);
@@ -108,6 +108,7 @@ function onActiveClick(e){
 
 selectors.list.addEventListener('change', handleCompletedTask);
 selectors.list.addEventListener('click', handleEditBtn);
+selectors.list.addEventListener('click', handleRemoveBtn);
 
 function handleCompletedTask(e){
     if(e.target.type !== "checkbox"){
@@ -131,7 +132,6 @@ function handleCompletedTask(e){
     localStorage.setItem(LS_KEY, JSON.stringify(LSdata));
 
     const activeFilter = document.querySelector('.filters button.active')?.dataset.filter || 'all';
-
     renderTasks(activeFilter);
 }
 
@@ -161,8 +161,28 @@ function handleEditBtn(e){
     localStorage.setItem(LS_KEY, JSON.stringify(LSdata));
 
     const activeFilter = document.querySelector('.filters button.active')?.dataset.filter || 'all';
-
     renderTasks(activeFilter);
 
     Notiflix.Notify.info('Текст завдання змінено');
+}
+
+function handleRemoveBtn(e){
+    const deleteBtn = e.target.closest('.delete');
+
+    if(!deleteBtn){
+        return;
+    }
+
+    const currentTask = deleteBtn.closest('li');
+    const id = Number(currentTask.dataset.id);
+
+    currentTask.classList.add('removing');
+
+    LSdata = LSdata.filter(task => task.id !== id);
+    localStorage.setItem(LS_KEY, JSON.stringify(LSdata));
+
+    const activeFilter = document.querySelector('.filters button.active')?.dataset.filter || 'all';
+    renderTasks(activeFilter);
+
+    Notiflix.Notify.info('Завдання видалено');
 }
